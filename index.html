@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oğuz Atasoy | Portfolio & Revenue Management</title>
+
+    <!-- OpenGraph SEO Tags pour LinkedIn -->
+    <meta property="og:title" content="Oğuz Atasoy | Assistant Revenue Manager">
+    <meta property="og:description"
+        content="Profil hybride Hôtellerie & Tech. Découvrez mon portfolio interactif, mes résultats d'optimisation (RevPAR/ADR) et mes outils.">
+    <meta property="og:image" content="https://portfolio-oguz-atasoy-6b9c1b.netlify.app/img/oguz_vrai_profil.jpg">
+    <meta property="og:url" content="https://portfolio-oguz-atasoy-6b9c1b.netlify.app">
+    <meta property="og:type" content="website">
+
+    <style>
+        /* Animations V10: Carrousel Vertical & Bouton Pulsatif */
+        @keyframes marquee-vertical {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-50%);
+            }
+        }
+
+        .tech-tag-v {
+            display: flex;
+            align-items: center;
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 10px 15px;
+            margin: 6px auto;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            width: 90%;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag-v i {
+            width: 28px;
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-right: 8px;
+        }
+
+        .tech-tag-v:hover {
+            transform: scale(1.02);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-cv-pulse {
+            position: relative;
+            animation: pulse-gold 2s infinite;
+        }
+
+        @keyframes pulse-gold {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(212, 175, 55, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+    </style>
+    <!-- Google Fonts for Premium Typography -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css?v=4">
+</head>
+
+<body>
+    <div id="tsparticles"></div> <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo" style="text-decoration: none; display: flex; align-items: baseline;">
+            <span
+                style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; color: var(--secondary-color); letter-spacing: -2px;">O<span
+                    style="margin-left: -2px;">A</span></span>
+            <i class="fa-solid fa-arrow-trend-up"
+                style="color: var(--primary-color); font-size: 1.5rem; margin-left: 6px; transform: translateY(-3px);"></i>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">À Propos</a></li>
+            <li><a href="#experience">Parcours & Chiffres Clés</a></li>
+            <li><a href="#projects">Projets</a></li>
+            <li><a href="#skills">Expertise</a></li>
+            <li><a href="#contact" class="btn-contact">Me Contacter</a></li>
+        </ul>
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <!-- Header / Hero Section (Avec Particules WebGL) -->
+    <header class="hero" id="home">
+
+        <div class="hero-content">
+            <div class="profile-img-container fade-up">
+                <!-- User's photo downloaded to the folder -->
+                <img src="img/oguz_vrai_profil.jpg" alt="Oğuz Atasoy" class="profile-img">
+            </div>
+            <p class="subtitle fade-up delay-1">Alternance Master (Sept. 2026) ⁃ 24 Mois</p>
+            <h1 class="title fade-up delay-2">Oğuz Atasoy</h1>
+            <h2 class="role fade-up delay-3">Assistant Revenue Manager & Yield Analyst</h2>
+            <p class="description fade-up delay-4">
+                Stratégie de tarification, optimisation du RevPAR et projets innovants.<br>
+                Favoriser la valeur (ADR) à la quantité (TO).
+            </p>
+            <div class="hero-buttons fade-up delay-4">
+                <a href="CV_Oguz_Atasoy.pdf" target="_blank" class="btn btn-primary btn-cv-pulse"
+                    style="font-weight: 700; font-size: 1.1rem; padding: 15px 30px;"><i class="fas fa-file-pdf"></i>
+                    Télécharger mon CV (PDF)</a>
+                <a href="#yield-results" class="btn btn-secondary"><i class="fas fa-chart-line"></i> Mes Résultats</a>
+                <a href="https://rm-dashboard-pro.vercel.app/" target="_blank" class="btn btn-secondary btn-rocket"
+                    style="border-color: var(--primary-color); color: var(--primary-color);">
+                    <i class="fas fa-rocket"></i> Mon Outil RM Live
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <a href="#about"><i class="fas fa-chevron-down"></i></a>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h3 class="section-title">Mon Profil</h3>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p class="highlight">La performance au service de l'expérience, la qualité avant la quantité.</p>
+                    <p>Actuellement en 3ème année de <strong>Bachelor Management Hôtellerie Internationale à Vatel
+                            Bordeaux</strong>, j'ai bâti mon expertise sur une évolution constante au sein de l'Hôtel Le
+                        Provençal.</p>
+                    <p>C'est de <strong>ma propre initiative et en totale autonomie</strong> (apprentissage autodidacte)
+                        que j'ai développé et déployé des outils techniques et stratégiques pour moderniser les méthodes
+                        de l'établissement qui m'emploie. Dans un marché imprévisible, j'ai fait le choix de
+                        <strong>favoriser la qualité de
+                            ce que l'on vend (ADR)</strong> plutôt que de brader nos prix pour maintenir le taux
+                        d'occupation, avec un impact direct et positif sur le RevPAR de l'établissement.
+                    </p>
+                    <p>Je recherche aujourd'hui une alternance exigeante de 24 mois pour mon Master à partir de
+                        <strong>Septembre 2026</strong> en tant qu'Assistant Revenue Manager.
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-box">
+                        <span class="stat-number">+23%</span>
+                        <span class="stat-label">d'ADR enregistré au 3ème mois sur les OTA</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Mois glissants d'optimisation (Saison / Concurrence)</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">C2</span>
+                        <span class="stat-label">Français & Turc (B2 Anglais pro)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <h3 class="section-title text-center">Réalisations & Chiffres Clés</h3>
+
+            <div class="timeline">
+
+                <!-- Exp 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h4>Assistant Revenue Manager & Réceptionniste Polyvalent</h4>
+                            <span class="date">Septembre 2023 - Aujourd'hui (Hôtel Le Provençal)</span>
+                        </div>
+                        <ul class="tasks">
+                            <li><strong>Optimisation de l'ADR (vs N-1) :</strong> Pilotage d'une croissance agressive du
+                                prix moyen, atteignant +22,95 % en Janvier 2026 et +13,90 % en Novembre.</li>
+                            <li><strong>Surperformance Market :</strong> Maintien d'un écart positif constant par
+                                rapport au set concurrentiel (+23,05 % d'écart positif en Janvier), hissant
+                                l'établissement à la 2ème place sur 11.</li>
+                            <li><strong>Architecture de Segmentation :</strong> Déploiement de plans tarifaires Premium
+                                capturant des valeurs d'ADR jusqu'à 119,05 € sur des segments spécifiques.</li>
+                            <li><strong>Pilotage Promotionnel :</strong> Capture de 12 478 € de CA via Booking.com grâce
+                                à un mix Early/Last Minute indexé sur les tarifs hauts (ADR ciblé à 103,01 €).</li>
+                            <li><strong>Gestion des Flux & PMS :</strong> Maîtrise opérationnelle du cycle GeHo (devis
+                                complexes à facturation), garantissant une intégrité financière totale.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h4>Stagiaire Polyvalent (Service, Cuisine, Hébergement)</h4>
+                            <span class="date">Mars 2022 (Logis Hôtel Black and Green ★★★)</span>
+                        </div>
+                        <ul class="tasks">
+                            <li>Service en salle et accueil lors de séminaires événementiels (jusqu'à 120 couverts).
+                            </li>
+                            <li>Expérience en coulisses (Cuisine & Logistique) : commis de cuisine avec spécialisation
+                                en pâtisserie.</li>
+                            <li>Polyvalence sur la réception client et le service des étages.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Box : Yield Performance (Light Mode) -->
+    <section id="yield-results" class="yield-performance container fade-up">
+        <div class="text-center">
+            <h2 class="section-title">Yield & Performance</h2>
+            <p class="subtitle">Analyse comparative marché (Hôtel Le Provençal) : Nov 2025 — Jan 2026</p>
+        </div>
+
+        <div class="bento-grid-light">
+            <div class="bento-card-light bento-chart">
+                <h3 class="kpi-title">Impact ADR : Écart vs N-1 (%)</h3>
+
+                <svg viewBox="0 0 500 280"
+                    style="width: 100%; height: auto; min-height: 300px; margin: 30px auto 10px; display: block; overflow: visible;">
+                    <defs>
+                        <linearGradient id="positiveGradient" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0%" stop-color="var(--primary-color)" stop-opacity="0.3" />
+                            <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+                        </linearGradient>
+                        <linearGradient id="negativeGradient" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0%" stop-color="#ff4444" stop-opacity="0" />
+                            <stop offset="100%" stop-color="#ff4444" stop-opacity="0.15" />
+                        </linearGradient>
+                    </defs>
+
+                    <path d="M 40,150 L 460,150" stroke="rgba(0,0,0,0.3)" stroke-width="2" stroke-dasharray="4,4" />
+                    <text x="15" y="154" font-size="12" font-family="var(--font-heading)" fill="var(--text-color)"
+                        font-weight="bold">0%</text>
+
+                    <path d="M 190,40 L 190,240" stroke="var(--primary-color)" stroke-width="1.5"
+                        stroke-dasharray="4,4" />
+                    <rect x="195" y="20" width="145" height="24" rx="4" fill="var(--primary-color)" opacity="0.1" />
+                    <text x="267" y="36" text-anchor="middle" font-size="11" font-family="var(--font-body)"
+                        fill="var(--primary-color)" font-weight="bold" text-transform="uppercase">Début de ma
+                        gestion</text>
+
+                    <path d="M 250,150 L 250,94 L 350,160 L 450,58 L 450,150 Z" fill="url(#positiveGradient)" />
+
+                    <path d="M 50,150 L 50,190 L 150,192 L 250,150 Z" fill="url(#negativeGradient)" />
+                    <path d="M 250,150 L 350,160 L 450,150 Z" fill="url(#negativeGradient)" />
+
+                    <path d="M 50,190 L 150,192 L 250,94 L 350,160 L 450,58" fill="none" stroke="var(--primary-color)"
+                        stroke-width="4" stroke-linejoin="round" />
+
+                    <circle cx="50" cy="190" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" />
+                    <circle cx="150" cy="192" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" />
+                    <circle cx="250" cy="94" r="6" fill="var(--white)" stroke="var(--primary-color)" stroke-width="3" />
+                    <circle cx="350" cy="160" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" />
+                    <circle cx="450" cy="58" r="8" fill="var(--primary-color)" />
+
+                    <text x="50" y="215" text-anchor="middle" font-size="14" font-family="var(--font-heading)"
+                        font-weight="bold" fill="#ff4444">-9,8%</text>
+                    <text x="150" y="217" text-anchor="middle" font-size="14" font-family="var(--font-heading)"
+                        font-weight="bold" fill="#ff4444">-10,5%</text>
+                    <text x="250" y="75" text-anchor="middle" font-size="16" font-family="var(--font-heading)"
+                        font-weight="bold" fill="var(--primary-color)">+13,9%</text>
+                    <text x="350" y="185" text-anchor="middle" font-size="14" font-family="var(--font-heading)"
+                        font-weight="bold" fill="#ff4444">-2,4%</text>
+                    <text x="450" y="40" text-anchor="middle" font-size="20" font-family="var(--font-heading)"
+                        font-weight="bold" fill="var(--primary-color)">+22,9%</text>
+
+                    <text x="50" y="260" text-anchor="middle" font-size="12" font-family="var(--font-body)"
+                        fill="var(--text-light)" font-weight="600">SEPT</text>
+                    <text x="150" y="260" text-anchor="middle" font-size="12" font-family="var(--font-body)"
+                        fill="var(--text-light)" font-weight="600">OCT</text>
+                    <text x="250" y="260" text-anchor="middle" font-size="12" font-family="var(--font-body)"
+                        fill="var(--text-light)" font-weight="600">NOV</text>
+                    <text x="350" y="260" text-anchor="middle" font-size="12" font-family="var(--font-body)"
+                        fill="var(--text-light)" font-weight="600">DÉC</text>
+                    <text x="450" y="260" text-anchor="middle" font-size="12" font-family="var(--font-body)"
+                        fill="var(--text-light)" font-weight="600">JAN</text>
+                </svg>
+            </div>
+
+            <div class="bento-card-light bento-kpi">
+                <div class="kpi-title">Surperformance Market</div>
+                <div class="kpi-value-gold">+23,05 %</div>
+                <p style="color: var(--text-light); font-size: 0.8rem;">Écart d'ADR généré face au set concurrentiel
+                    (Janvier).</p>
+            </div>
+
+            <div class="bento-card-light bento-kpi">
+                <div class="kpi-title">CA Mix Promotionnel</div>
+                <div class="kpi-value-gold">12 478 €</div>
+                <p style="color: var(--text-light); font-size: 0.8rem;">Revenus sécurisés via leviers Early/Last Minute
+                    ciblés.</p>
+            </div>
+
+            <div class="bento-card-light bento-text">
+                <h3 class="kpi-title" style="margin-bottom: 15px;">Ingénierie de la Valeur & Architecture Tarifaire</h3>
+                <p style="margin-bottom: 10px;"><strong>Arbitrage Volume/Prix :</strong> Malgré une baisse globale des
+                    nuitées sur le marché en janvier, la stratégie a sécurisé un ADR de 85,98 €, surpassant largement la
+                    moyenne locale (69,87 €).</p>
+                <p><strong>Segmentation Premium :</strong> Déploiement de plans 'Super Flexible' et 'Non-Remboursable',
+                    poussant l'ADR jusqu'à 119,05 € sur les chambres supérieures. L'indexation des promotions sur ces
+                    plans a permis un ADR Early Booker culminant à 103,01 €.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Citation Client Vedette & Opérationnel -->
+    <section class="testimonial" id="testimonial"
+        style="background-color: var(--accent-color); color: var(--text-color); padding: 100px 0; text-align: center;">
+        <div class="container fade-up">
+            <h3 class="section-title text-center"
+                style="color: var(--secondary-color); border-color: var(--primary-color); margin-bottom: 30px; display: inline-block;">
+                Excellence Opérationnelle</h3>
+
+            <div class="stars" style="color: var(--primary-color); font-size: 1.5rem; margin-bottom: 20px;">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                    class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+
+            <blockquote
+                style="font-size: 1.5rem; font-style: italic; max-width: 800px; margin: 0 auto; line-height: 1.6; font-family: 'Playfair Display', serif;">
+                <i class="fas fa-quote-left"
+                    style="color: var(--primary-color); font-size: 2rem; vertical-align: top; margin-right: 15px; opacity: 0.5;"></i>
+                Le service est excellent, je tiens particulièrement à féliciter l'employé Atasoy Oguz, très attentionné
+                et serviable.
+                <i class="fas fa-quote-right"
+                    style="color: var(--primary-color); font-size: 2rem; vertical-align: bottom; margin-left: 15px; opacity: 0.5;"></i>
+            </blockquote>
+            <p
+                style="margin-top: 30px; margin-bottom: 40px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--primary-color); font-size: 0.9rem;">
+                — Avis Client Vérifié (Booking.com)</p>
+            <h4 class="text-center"
+                style="font-weight: 400; font-size: 1.5rem; color: var(--text-light); margin-bottom: 40px;">J'ai œuvré
+                pour :</h4>
+
+            <!-- Grille de compétences opérationnelles -->
+            <div
+                style="display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; max-width: 1000px; margin: 0 auto;">
+                <div
+                    style="flex: 1 1 250px; background: var(--white); padding: 30px 20px; border-radius: 8px; border-top: 2px solid var(--primary-color); transition: transform 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+                    <i class="fas fa-users"
+                        style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+                    <h4
+                        style="font-size: 1.2rem; margin-bottom: 15px; color: var(--secondary-color); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">
+                        Gestion de Groupes</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-light); line-height: 1.5;">Piloter les séjours de A
+                        à Z :
+                        création de devis sur-mesure, accueil physique et facturation globale.</p>
+                </div>
+                <div
+                    style="flex: 1 1 250px; background: var(--white); padding: 30px 20px; border-radius: 8px; border-top: 2px solid var(--primary-color); transition: transform 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+                    <i class="fas fa-tools"
+                        style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+                    <h4
+                        style="font-size: 1.2rem; margin-bottom: 15px; color: var(--secondary-color); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">
+                        Résolution de Cas Pratiques</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-light); line-height: 1.5;">Résolution de conflits et
+                        gestion
+                        des cas complexes avec diplomatie pour garantir la plus haute satisfaction.</p>
+                </div>
+                <div
+                    style="flex: 1 1 250px; background: var(--white); padding: 30px 20px; border-radius: 8px; border-top: 2px solid var(--primary-color); transition: transform 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+                    <i class="fas fa-chalkboard-teacher"
+                        style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+                    <h4
+                        style="font-size: 1.2rem; margin-bottom: 15px; color: var(--secondary-color); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">
+                        Mentorat</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-light); line-height: 1.5;">Accompagnement continu et
+                        formation
+                        opérationnelle des nouveaux collaborateurs et stagiaires.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Academic & Personal Projects Section -->
+    <section class="projects" id="projects"
+        style="padding: 100px 0; background: transparent; position: relative; z-index: 1;">
+        <div class="container">
+            <h3 class="section-title text-center">Mes projets et réalisations</h3>
+
+            <!-- ★ PROJET VEDETTE : Dashboard RM (Full Width) -->
+            <div
+                style="background: var(--white); border-radius: 12px; padding: 40px; margin-bottom: 50px; border-top: 4px solid var(--primary-color); position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
+                <div
+                    style="position: absolute; top: -14px; right: 25px; background: var(--primary-color); color: var(--white); font-size: 0.75rem; padding: 4px 14px; border-radius: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">
+                    Projet Phare — Live App</div>
+
+                <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+                    <!-- Colonne Gauche : Icône + Description -->
+                    <div style="flex: 1; min-width: 280px;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div
+                                style="width: 55px; height: 55px; background: var(--accent-color); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-chart-bar" style="font-size: 1.6rem; color: var(--primary-color);"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin: 0; font-size: 1.4rem; color: var(--secondary-color);">ORMpro System
+                                    Analytics</h4>
+                                <p style="margin: 0; color: var(--primary-color); font-weight: 600; font-size: 0.9rem;">
+                                    Intelligence Artificielle & Ingénierie du Yield Management</p>
+                            </div>
+                        </div>
+                        <p style="color: var(--text-light); line-height: 1.7; font-size: 0.95rem; margin-bottom: 15px;">
+                            Conception et déploiement d'un écosystème SaaS complet d'aide à la décision tarifaire.
+                            Alliant la puissance d'analyse de <strong>Python</strong> à une interface utilisateur
+                            <strong>Next.js</strong> ultra-fluide,
+                            cet outil automatise le yield management pour maximiser la rentabilité.
+                        </p>
+                        <ul style="padding-left: 0; list-style: none;">
+                            <li style="margin-bottom: 8px;"><i class="fas fa-caret-right"
+                                    style="color: var(--primary-color); margin-right: 8px;"></i> <strong>Analyse
+                                    Prédictive :</strong> Algorithmes de Demand Forecasting & Dynamic Pricing basés sur
+                                l'historique et la saisonnalité.</li>
+                            <li style="margin-bottom: 8px;"><i class="fas fa-caret-right"
+                                    style="color: var(--primary-color); margin-right: 8px;"></i> <strong>Intelligence
+                                    Marché :</strong> Monitoring automatisé du Set Concurrentiel (MPI, ARI, RGI) via
+                                intégration d'API temps réel.</li>
+                            <li style="margin-bottom: 8px;"><i class="fas fa-caret-right"
+                                    style="color: var(--primary-color); margin-right: 8px;"></i> <strong>Interface
+                                    Premium :</strong> Dashboard interactif haute performance avec états de chargement
+                                intelligents et visualisations Recharts.</li>
+                            <li style="margin-bottom: 8px;"><i class="fas fa-caret-right"
+                                    style="color: var(--primary-color); margin-right: 8px;"></i> <strong>Architecture
+                                    Scalable :</strong> Système conçu pour une intégration multi-hôtels avec une gestion
+                                sécurisée des sessions.</li>
+                        </ul>
+                    </div>
+                    <!-- Colonne Droite : Tags + CTA -->
+                    <div
+                        style="flex: 0 0 280px; display: flex; flex-direction: column; align-items: flex-start; gap: 15px;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                            <span
+                                style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">Python</span>
+                            <span
+                                style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">Next.js
+                                16</span>
+                            <span
+                                style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">React</span>
+                            <span
+                                style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">Recharts</span>
+                            <span
+                                style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">Tailwind</span>
+                        </div>
+                        <a href="https://rm-dashboard-pro.vercel.app/" target="_blank"
+                            style="display: inline-block; background: var(--primary-color); color: var(--white); padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(201,162,62,0.3);">
+                            <i class="fas fa-rocket"></i> Lancer l'Application Live
+                        </a>
+                        <p
+                            style="color: var(--text-light); font-size: 0.8rem; margin: 0; line-height: 1.4; max-width: 280px;">
+                            <i class="fas fa-info-circle" style="color: var(--primary-color);"></i>
+                            <strong>Note technique :</strong> Cette plateforme est une version de démonstration (Bêta).
+                            Les indicateurs et données affichés sont des simulations générées à des fins de présentation
+                            fonctionnelle.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Projets Secondaires -->
+        <p
+            style="text-align: center; color: var(--text-light); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 25px;">
+            Mes autres projets</p>
+        <div class="skills-grid">
+
+            <div class="project-category">
+                <div class="skill-icon"><i class="fas fa-hotel"></i></div>
+                <h4>Projet Hôtelier Vatel : Oasis</h4>
+                <p style="color: var(--text-light); margin-bottom: 10px; font-size: 0.95rem;">
+                    <strong>Création totale d'un concept</strong>
+                </p>
+                <ul style="padding-left:0;">
+                    <li><i class="fas fa-caret-right"></i> Élaboration d'un business plan complet.</li>
+                    <li><i class="fas fa-caret-right"></i> Réalisation de maquettes et plans 3D.</li>
+                    <li><i class="fas fa-caret-right"></i> Conception et intégration de la démarche RSE et de la
+                        stratégie d'innovation hôtelière.</li>
+                </ul>
+            </div>
+
+            <div class="project-category">
+                <div class="skill-icon"><i class="fas fa-house-user"></i></div>
+                <h4>Projet Immobilier Court-Terme<br>
+                    <span style="font-size: 0.8rem; color: var(--primary-color); font-weight: normal;">(En cours de
+                        réalisation)</span>
+                </h4>
+                <p style="color: var(--text-light); margin-bottom: 10px; font-size: 0.95rem;">
+                    <strong>Prospection B2B & Outils IA</strong>
+                </p>
+                <ul style="padding-left:0;">
+                    <li><i class="fas fa-caret-right"></i> Entrepreneuriat : création d'une architecture locative et
+                        stratégique.</li>
+                    <li><i class="fas fa-caret-right"></i> Automatisation : utilisation de l'intelligence
+                        artificielle pour la prospection et l'organisation.</li>
+                    <li><i class="fas fa-caret-right"></i> Veille technologique pour automatiser les revenus
+                        (Personal Finance).</li>
+                </ul>
+            </div>
+
+            <div class="project-category">
+                <div class="skill-icon"><i class="fas fa-globe-americas"></i></div>
+                <h4>Passions & Loisirs</h4>
+                <p style="color: var(--text-light); margin-bottom: 10px; font-size: 0.95rem;">
+                    <strong>Développement Personnel</strong>
+                </p>
+                <ul style="padding-left:0;">
+                    <li><i class="fas fa-heart"></i> Mettre à profit la Tech (IA) pour apprendre de nouvelles
+                        compétences techniques.</li>
+                    <li><i class="fas fa-heart"></i> Voyage & Découverte des cultures.</li>
+                    <li><i class="fas fa-heart"></i> Investissement boursier & Gestion de revenus financiers.</li>
+                    <li><i class="fas fa-heart"></i> Cuisiner & Pratique du sport intensif.</li>
+                </ul>
+            </div>
+
+        </div>
+        </div>
+    </section>
+
+    <!-- Skills Section (Avec Vagues WebGL) -->
+    <section class="skills" id="skills" style="position: relative; overflow: hidden; background-color: #111;">
+        <div class="container" style="position: relative; z-index: 1;">
+            <h3 class="section-title text-center" style="color: var(--white); border-color: var(--primary-color);">
+                Outils & Stack Technique</h3>
+            <div class="skills-grid" style="margin-top: 30px;">
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h4>Écosystème RM</h4>
+                    <div class="carousel-wrapper"
+                        style="overflow: hidden; height: 160px; width: 100%; margin-top: 15px; position: relative;">
+                        <div
+                            style="position:absolute; top:0; left:0; width:100%; height:20px; background: linear-gradient(to bottom, #111111 10%, transparent); z-index:2;">
+                        </div>
+                        <div
+                            style="position:absolute; bottom:0; left:0; width:100%; height:20px; background: linear-gradient(to top, #111111 10%, transparent); z-index:2;">
+                        </div>
+
+                        <div class="marquee-content-vertical"
+                            style="display: flex; flex-direction: column; animation: marquee-vertical 15s linear infinite;">
+                            <span class="tech-tag-v"><i class="fas fa-server"></i> D-EDGE (Chan. M.)</span>
+                            <span class="tech-tag-v"><i class="fas fa-chart-pie"></i> Lighthouse</span>
+                            <span class="tech-tag-v"><i class="fas fa-globe"></i> Booking / Expedia</span>
+                            <span class="tech-tag-v"><i class="fas fa-bed"></i> PMS GeHo</span>
+                            <!-- Duplicate for seamless loop -->
+                            <span class="tech-tag-v"><i class="fas fa-server"></i> D-EDGE (Chan. M.)</span>
+                            <span class="tech-tag-v"><i class="fas fa-chart-pie"></i> Lighthouse</span>
+                            <span class="tech-tag-v"><i class="fas fa-globe"></i> Booking / Expedia</span>
+                            <span class="tech-tag-v"><i class="fas fa-bed"></i> PMS GeHo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Analytique & Tech</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> MS Excel (Expert : TCD, Macros)</li>
+                        <li><i class="fas fa-check"></i> Conception de tableaux de bord</li>
+                        <li><i class="fas fa-check"></i> IA générative & Automatisation</li>
+                        <li><i class="fas fa-check"></i> Canva (Design B2B)</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                    <h4>Soft Skills & Langues</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Apprentissage Autodidacte & Proactif</li>
+                        <li><i class="fas fa-check"></i> Anglais B2 & Turc Courant</li>
+                        <li><i class="fas fa-check"></i> Rigueur & Capacité d'Analyse</li>
+                        <li><i class="fas fa-check"></i> Gestion de Projets Transverses</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer id="contact">
+        <div class="container text-center">
+            <h3 class="section-title" style="color:white;">Prêt à collaborer ?</h3>
+            <p style="color: #aaa; margin-bottom: 30px;">Rencontrons-nous pour échanger sur vos enjeux de Revenue
+                Management.</p>
+            <div class="contact-methods">
+                <a href="mailto:Oguz.atasoy2@gmail.com" class="contact-box">
+                    <i class="fas fa-envelope"></i>
+                    <span>Oguz.atasoy2@gmail.com</span>
+                </a>
+                <a href="tel:+33667560551" class="contact-box">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>06 67 56 05 51</span>
+                </a>
+                <a href="https://www.linkedin.com/in/o%C4%9Fuz-atasoy-a8448025b/" target="_blank" class="contact-box">
+                    <i class="fab fa-linkedin"></i>
+                    <span>oguz-atasoy</span>
+                </a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Oğuz Atasoy. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Button -->
+    <a href="https://wa.me/33667560551" target="_blank" class="floating-btn" title="Me contacter sur WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.0.6/tsparticles.bundle.min.js"></script>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
