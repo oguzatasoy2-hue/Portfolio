@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-oguz-atasoy-6b9c1b.netlify.app/sitemap.xml
