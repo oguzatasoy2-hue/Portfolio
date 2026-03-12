@@ -1277,3 +1277,110 @@ footer {
         grid-column: span 1;
     }
 }
+
+/* ============================================
+   CORRECTIONS & AMÉLIORATIONS v11
+   ============================================ */
+
+/* FIX: bar-animate pour les cercles SVG */
+.bar-animate {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.bar-animate.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.bar-animate:nth-of-type(1) { transition-delay: 0ms; }
+.bar-animate:nth-of-type(2) { transition-delay: 200ms; }
+.bar-animate:nth-of-type(3) { transition-delay: 400ms; }
+.bar-animate:nth-of-type(4) { transition-delay: 600ms; }
+.bar-animate:nth-of-type(5) { transition-delay: 800ms; }
+
+/* SVG line draw effect */
+.chart-line-draw {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  transition: stroke-dashoffset 2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+.chart-line-draw.is-visible {
+  stroke-dashoffset: 0;
+}
+
+/* MAGNETIC BUTTONS */
+.btn-magnetic {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.3s ease,
+              background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease;
+}
+
+/* TEXT SCRAMBLE */
+.text-scramble {
+  font-variant-numeric: tabular-nums;
+}
+
+/* CONTACT BOX — shimmer hover */
+.contact-box {
+  position: relative;
+  overflow: hidden;
+}
+.contact-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.08), transparent);
+  transition: left 0.6s ease;
+}
+.contact-box:hover::before {
+  left: 100%;
+}
+
+/* SKILL CATEGORY — glow border au hover */
+.skill-category {
+  position: relative;
+}
+.skill-category::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.3), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+.skill-category:hover::after {
+  opacity: 1;
+}
+
+/* FLOATING BTN — entrée retardée */
+.floating-btn {
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  animation: floatingBtnIn 0.5s ease-out 2s forwards;
+}
+@keyframes floatingBtnIn {
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Z-INDEX sections */
+.about, .experience, .yield-performance, .testimonial, .projects, .skills, footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* PRINT */
+@media print {
+  .cursor-dot, .cursor-ring, #cursorGlow, #scrollProgress,
+  #tsparticles, .floating-btn, .scroll-indicator { display: none !important; }
+  .animate-on-scroll, .hero-fade, .hero-photo, .stagger-children > * {
+    opacity: 1 !important; transform: none !important;
+    animation: none !important; transition: none !important;
+  }
+}
