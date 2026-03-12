@@ -793,6 +793,8 @@ footer {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
 }
 
 /* État final : visible et en place */
@@ -955,6 +957,7 @@ footer {
   transform: translate(-50%, -50%);
   transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
   opacity: 0;
+  will-change: left, top;
 }
 
 .cursor-ring {
@@ -968,6 +971,7 @@ footer {
   transform: translate(-50%, -50%);
   transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, border-color 0.25s ease;
   opacity: 0;
+  will-change: left, top;
 }
 
 .cursor-dot.is-active { opacity: 1; }
@@ -992,6 +996,8 @@ footer {
   opacity: 0;
   transform: scale(1.05);
   animation: heroPhotoIn 1s ease-out 0.2s forwards;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* ============================================

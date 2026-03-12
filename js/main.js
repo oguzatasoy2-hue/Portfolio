@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ============================================
-  // PARALLAX SUBTIL PHOTO HERO (desktop)
+  // PARALLAX SUBTIL PHOTO HERO (desktop, throttlé RAF)
   // ============================================
   if (window.matchMedia('(hover: hover)').matches) {
     const photoWrap = document.querySelector('.hero-photo');
@@ -230,11 +230,18 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         photoWrap.style.animation = 'none';
         photoWrap.style.opacity = '1';
-        photoWrap.style.transform = 'scale(1)';
+        photoWrap.style.transform = 'translateZ(0)';
+        let rafPending = false;
         window.addEventListener('scroll', () => {
-          const scroll = window.scrollY;
-          if (scroll < 700) {
-            photoWrap.style.transform = `translateY(${scroll * 0.07}px)`;
+          if (!rafPending) {
+            rafPending = true;
+            requestAnimationFrame(() => {
+              const scroll = window.scrollY;
+              if (scroll < 700) {
+                photoWrap.style.transform = `translateY(${scroll * 0.07}px)`;
+              }
+              rafPending = false;
+            });
           }
         }, { passive: true });
       }, 1400);
@@ -376,17 +383,23 @@ const activeSectionObserver = new IntersectionObserver((entries) => {
 pageSections.forEach(s => activeSectionObserver.observe(s));
 
 // ============================================
-// SCROLL PROGRESS BAR
+// SCROLL PROGRESS BAR (throttlé RAF)
 // ============================================
-window.addEventListener('scroll', () => {
-  const scrollBar = document.getElementById('scrollProgress');
-  if (scrollBar) {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (scrollTop / docHeight) * 100;
-    scrollBar.style.width = progress + '%';
-  }
-}, { passive: true });
+const scrollBar = document.getElementById('scrollProgress');
+if (scrollBar) {
+  let rafBar = false;
+  window.addEventListener('scroll', () => {
+    if (!rafBar) {
+      rafBar = true;
+      requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        scrollBar.style.width = ((scrollTop / docHeight) * 100) + '%';
+        rafBar = false;
+      });
+    }
+  }, { passive: true });
+}
 
 // ============================================
 // tsParticles (Particules Dorées)
