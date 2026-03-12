@@ -259,30 +259,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ============================================
-  // TEXT SCRAMBLE — effet decode sur le role
+  // TYPEWRITER — saisie lettre par lettre sur le role
   // ============================================
-  const scrambleEl = document.querySelector('.text-scramble');
-  if (scrambleEl) {
-    const finalText = scrambleEl.textContent;
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%';
-    let iteration = 0;
-
-    function scramble() {
-      scrambleEl.textContent = finalText
-        .split('')
-        .map((char, index) => {
-          if (index < iteration) return finalText[index];
-          if (char === ' ') return ' ';
-          return chars[Math.floor(Math.random() * chars.length)];
-        })
-        .join('');
-      if (iteration < finalText.length) {
-        iteration += 1 / 2;
-        requestAnimationFrame(() => setTimeout(scramble, 30));
+  const twEl = document.querySelector('.text-scramble');
+  if (twEl) {
+    const fullText = twEl.textContent.trim();
+    twEl.textContent = '';
+    let i = 0;
+    function typeNext() {
+      if (i < fullText.length) {
+        twEl.textContent += fullText[i];
+        i++;
+        setTimeout(typeNext, 35);
       }
     }
-
-    setTimeout(scramble, 800);
+    setTimeout(typeNext, 700);
   }
 
 }); // fin DOMContentLoaded

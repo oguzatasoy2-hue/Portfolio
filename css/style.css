@@ -1037,7 +1037,6 @@ footer {
    ============================================ */
 .card-light {
   position: relative;
-  overflow: hidden;
 }
 
 .card-light::before {
