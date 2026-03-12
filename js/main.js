@@ -186,6 +186,79 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================
+// CURSEUR CUSTOM DORÉ
+// ============================================
+const cursorDot  = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+
+if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
+  let mouseX = 0, mouseY = 0;
+  let ringX  = 0, ringY  = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top  = mouseY + 'px';
+    cursorDot.classList.add('is-active');
+    cursorRing.classList.add('is-active');
+  });
+
+  // Ring suit avec légère inertie
+  (function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top  = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+
+  // Agrandissement sur les éléments interactifs
+  document.querySelectorAll('a, button, .btn, .contact-box, .card-tilt').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorDot.classList.add('hovered');
+      cursorRing.classList.add('hovered');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorDot.classList.remove('hovered');
+      cursorRing.classList.remove('hovered');
+    });
+  });
+
+  // Masquer le curseur quand il quitte la fenêtre
+  document.addEventListener('mouseleave', () => {
+    cursorDot.classList.remove('is-active');
+    cursorRing.classList.remove('is-active');
+  });
+  document.addEventListener('mouseenter', () => {
+    cursorDot.classList.add('is-active');
+    cursorRing.classList.add('is-active');
+  });
+}
+
+// ============================================
+// NAV ACTIVE SECTION
+// ============================================
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+const pageSections = document.querySelectorAll('section[id], header[id]');
+
+const activeSectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navAnchors.forEach(a => {
+        a.classList.remove('nav-active');
+        if (a.getAttribute('href') === `#${id}`) {
+          a.classList.add('nav-active');
+        }
+      });
+    }
+  });
+}, { threshold: 0.4 });
+
+pageSections.forEach(s => activeSectionObserver.observe(s));
+
+// ============================================
 // SCROLL PROGRESS BAR
 // ============================================
 window.addEventListener('scroll', () => {

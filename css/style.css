@@ -856,16 +856,10 @@ footer {
   }
 }
 
-.hero-photo {
-  opacity: 0;
-  transform: scale(1.05);
-  animation: heroPhotoIn 1s ease-out 0.2s forwards;
-}
-
 @keyframes heroPhotoIn {
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -929,10 +923,126 @@ footer {
   top: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(90deg, var(--primary-color), #f0d060, var(--primary-color));
+  background-size: 200% auto;
   width: 0%;
   z-index: 9999;
   transition: width 0.1s linear;
+  animation: scroll-bar-shine 3s linear infinite;
+}
+
+@keyframes scroll-bar-shine {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ============================================
+   CURSEUR CUSTOM DORÉ
+   ============================================ */
+@media (pointer: fine) {
+  body { cursor: none; }
+  a, button { cursor: none; }
+}
+
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+  opacity: 0;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--primary-color);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, border-color 0.25s ease;
+  opacity: 0;
+}
+
+.cursor-dot.is-active { opacity: 1; }
+.cursor-ring.is-active { opacity: 0.5; }
+
+.cursor-dot.hovered {
+  width: 4px;
+  height: 4px;
+}
+
+.cursor-ring.hovered {
+  width: 48px;
+  height: 48px;
+  opacity: 0.25;
+  border-color: var(--primary-color);
+}
+
+/* ============================================
+   PHOTO PROFIL FLOTTANTE
+   ============================================ */
+@keyframes float-profile {
+  0%, 100% { transform: scale(1) translateY(0); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+  50%       { transform: scale(1.01) translateY(-10px); box-shadow: 0 20px 40px rgba(212,175,55,0.2); }
+}
+
+.hero-photo {
+  opacity: 0;
+  transform: scale(1.05);
+  animation: heroPhotoIn 1s ease-out 0.2s forwards, float-profile 5s ease-in-out 1.5s infinite;
+}
+
+/* ============================================
+   NAV — UNDERLINE DORÉ ACTIF & HOVER
+   ============================================ */
+.nav-links a {
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--primary-color);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.nav-active::after {
+  transform: scaleX(1);
+}
+
+.nav-links a.nav-active {
+  color: var(--primary-color);
+}
+
+/* ============================================
+   KPI VALUES — SHIMMER DORÉ
+   ============================================ */
+@keyframes kpi-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.kpi-value-gold {
+  background: linear-gradient(90deg, #b8962e 0%, #f5d877 40%, #D4AF37 55%, #b8962e 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: kpi-shimmer 4s linear infinite;
 }
 
 /* Respect de l'accessibilité */
