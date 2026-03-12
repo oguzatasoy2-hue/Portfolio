@@ -986,17 +986,12 @@ footer {
 }
 
 /* ============================================
-   PHOTO PROFIL FLOTTANTE
+   PHOTO PROFIL — apparition seule, sans flottant
    ============================================ */
-@keyframes float-profile {
-  0%, 100% { transform: scale(1) translateY(0); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-  50%       { transform: scale(1.01) translateY(-10px); box-shadow: 0 20px 40px rgba(212,175,55,0.2); }
-}
-
 .hero-photo {
   opacity: 0;
   transform: scale(1.05);
-  animation: heroPhotoIn 1s ease-out 0.2s forwards, float-profile 5s ease-in-out 1.5s infinite;
+  animation: heroPhotoIn 1s ease-out 0.2s forwards;
 }
 
 /* ============================================
@@ -1028,21 +1023,63 @@ footer {
   color: var(--primary-color);
 }
 
-/* ============================================
-   KPI VALUES — SHIMMER DORÉ
-   ============================================ */
-@keyframes kpi-shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+/* KPI VALUES — couleur or simple */
+.kpi-value-gold {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: var(--primary-color);
+  line-height: 1;
+  margin-bottom: 10px;
 }
 
-.kpi-value-gold {
-  background: linear-gradient(90deg, #b8962e 0%, #f5d877 40%, #D4AF37 55%, #b8962e 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: kpi-shimmer 4s linear infinite;
+/* ============================================
+   CARD LIGHT EFFECT (reflet qui suit le curseur)
+   ============================================ */
+.card-light {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-light::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(212, 175, 55, 0.06),
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-light:hover::before {
+  opacity: 1;
+}
+
+.card-light > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   RÉVÉLATION DE TEXTE — SECTION TITLES
+   ============================================ */
+.title-reveal {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.title-reveal span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.title-reveal.is-visible span {
+  transform: translateY(0);
 }
 
 /* Respect de l'accessibilité */

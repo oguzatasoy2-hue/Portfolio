@@ -237,6 +237,19 @@ if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
 }
 
 // ============================================
+// CARD LIGHT EFFECT (reflet qui suit le curseur)
+// ============================================
+document.querySelectorAll('.card-light').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mouse-x', x + '%');
+    card.style.setProperty('--mouse-y', y + '%');
+  });
+});
+
+// ============================================
 // NAV ACTIVE SECTION
 // ============================================
 const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
