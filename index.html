@@ -89,7 +89,8 @@
     <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 
-<body>
+<body id="top">
+    <div class="scroll-progress-bar" id="scrollProgress"></div>
     <div id="tsparticles"></div> <!-- Navigation -->
     <nav class="navbar">
         <a href="#" class="logo" style="text-decoration: none; display: flex; align-items: baseline;">
@@ -113,17 +114,17 @@
     <header class="hero" id="home">
 
         <div class="hero-content">
-            <div class="profile-img-container fade-up">
+            <div class="profile-img-container hero-photo">
                 <!-- User's photo downloaded to the folder -->
                 <img src="img/oguz_vrai_profil.jpg" alt="Oğuz Atasoy" class="profile-img">
             </div>
-            <p class="subtitle fade-up delay-1">Alternance Master (Sept. 2026) ⁃ 24 Mois</p>
-            <h1 class="title fade-up delay-2">Oğuz Atasoy</h1>
-            <h2 class="role fade-up delay-3">Assistant Revenue Manager & Yield Analyst</h2>
-            <p class="description fade-up delay-4">
+            <p class="subtitle hero-animate">Alternance Master (Sept. 2026) ⁃ 24 Mois</p>
+            <h1 class="title hero-animate">Oğuz Atasoy</h1>
+            <h2 class="role hero-animate">Assistant Revenue Manager & Yield Analyst</h2>
+            <p class="description hero-animate">
                 Stratégie de tarification, optimisation du RevPAR et projets innovants.
             </p>
-            <div class="hero-buttons fade-up delay-4">
+            <div class="hero-buttons hero-animate">
                 <a href="CV_Oguz_Atasoy.pdf" target="_blank" class="btn btn-primary btn-cv-pulse"
                     style="font-weight: 700; font-size: 1.1rem; padding: 15px 30px;"><i class="fas fa-file-pdf"></i>
                     Télécharger mon CV (PDF)</a>
@@ -140,36 +141,25 @@
     </header>
 
     <!-- About Section -->
-    <section class="about" id="about">
+    <section class="about animate-on-scroll" id="about">
         <div class="container">
             <h3 class="section-title">Mon Profil</h3>
             <div class="about-grid">
                 <div class="about-text">
-                    <p class="highlight">La performance au service de l'expérience, la qualité avant la quantité.</p>
-                    <p>Actuellement en 3ème année de <strong>Bachelor Management Hôtellerie Internationale à Vatel
-                            Bordeaux</strong>, j'ai bâti mon expertise sur une évolution constante au sein de l'Hôtel Le
-                        Provençal.</p>
-                    <p>C'est de <strong>ma propre initiative et en totale autonomie</strong> (apprentissage autodidacte)
-                        que j'ai développé et déployé des outils techniques et stratégiques pour moderniser les méthodes
-                        de l'établissement qui m'emploie. Dans un marché imprévisible, j'ai fait le choix de
-                        <strong>favoriser la qualité de
-                            ce que l'on vend (ADR)</strong> plutôt que de brader nos prix pour maintenir le taux
-                        d'occupation, avec un impact direct et positif sur le RevPAR de l'établissement.
-                    </p>
-                    <p>Je recherche aujourd'hui une alternance exigeante de 24 mois pour mon Master à partir de
-                        <strong>Septembre 2026</strong> en tant qu'Assistant Revenue Manager.
-                    </p>
+                    <p class="highlight"><strong>Ma conviction : favoriser la qualité de ce que l'on vend (ADR) plutôt que de brader les prix pour maintenir le taux d'occupation.</strong></p>
+                    <p>Actuellement en 3ème année de Bachelor Management Hôtellerie Internationale à Vatel Bordeaux, j'ai bâti mon expertise sur une évolution constante au sein de l'Hôtel Le Provençal. C'est de ma propre initiative et en totale autonomie (apprentissage autodidacte) que j'ai développé et déployé des outils techniques et stratégiques pour moderniser les méthodes de l'établissement, avec un impact direct et positif sur le RevPAR.</p>
+                    <p>Je recherche aujourd'hui une alternance exigeante de 24 mois pour mon Master à partir de Septembre 2026 en tant qu'Assistant Revenue Manager.</p>
                 </div>
-                <div class="about-stats">
+                <div class="about-stats stagger-children">
                     <div class="stat-box">
-                        <span class="stat-number">+23%</span>
+                        <span class="stat-number counter-animate" data-target="23" data-suffix="%">0%</span>
                         <span class="stat-label">d'ADR enregistré au 3ème mois sur les OTA</span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-number">12</span>
+                        <span class="stat-number counter-animate" data-target="12" data-suffix="">0</span>
                         <span class="stat-label">Mois glissants d'optimisation (Saison / Concurrence)</span>
                     </div>
-                    <div class="stat-box">
+                    <div class="stat-box animate-on-scroll" style="transition-delay: 300ms;">
                         <span class="stat-number">C2</span>
                         <span class="stat-label">Français & Turc (B2 Anglais pro)</span>
                     </div>
@@ -179,9 +169,9 @@
     </section>
 
     <!-- Experience Section -->
-    <section class="experience" id="experience">
+    <section class="experience animate-on-scroll" id="experience">
         <div class="container">
-            <h3 class="section-title text-center">Réalisations & Chiffres Clés</h3>
+            <h3 class="section-title text-center animate-on-scroll">Réalisations & Chiffres Clés</h3>
 
             <div class="timeline">
 
@@ -232,14 +222,14 @@
     </section>
 
     <!-- Bento Box : Yield Performance (Light Mode) -->
-    <section id="yield-results" class="yield-performance container fade-up">
+    <section id="yield-results" class="yield-performance container animate-on-scroll">
         <div class="text-center">
             <h2 class="section-title">Yield & Performance</h2>
             <p class="subtitle">Analyse comparative marché (Hôtel Le Provençal) : Nov 2025 — Jan 2026</p>
         </div>
 
-        <div class="bento-grid-light">
-            <div class="bento-card-light bento-chart">
+        <div class="bento-grid-light chart-container">
+            <div class="bento-card-light bento-chart animate-on-scroll scale-in">
                 <h3 class="kpi-title">Impact ADR : Écart vs N-1 (%)</h3>
 
                 <svg viewBox="0 0 500 280"
@@ -274,11 +264,11 @@
                     <path d="M 50,190 L 150,192 L 250,94 L 350,160 L 450,58" fill="none" stroke="var(--primary-color)"
                         stroke-width="4" stroke-linejoin="round" />
 
-                    <circle cx="50" cy="190" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" />
-                    <circle cx="150" cy="192" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" />
-                    <circle cx="250" cy="94" r="6" fill="var(--white)" stroke="var(--primary-color)" stroke-width="3" />
-                    <circle cx="350" cy="160" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" />
-                    <circle cx="450" cy="58" r="8" fill="var(--primary-color)" />
+                    <circle cx="50" cy="190" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" class="bar-animate" />
+                    <circle cx="150" cy="192" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" class="bar-animate" />
+                    <circle cx="250" cy="94" r="6" fill="var(--white)" stroke="var(--primary-color)" stroke-width="3" class="bar-animate" />
+                    <circle cx="350" cy="160" r="5" fill="var(--white)" stroke="#ff4444" stroke-width="2.5" class="bar-animate" />
+                    <circle cx="450" cy="58" r="8" fill="var(--primary-color)" class="bar-animate" />
 
                     <text x="50" y="215" text-anchor="middle" font-size="14" font-family="var(--font-heading)"
                         font-weight="bold" fill="#ff4444">-9,8%</text>
@@ -304,14 +294,14 @@
                 </svg>
             </div>
 
-            <div class="bento-card-light bento-kpi">
+            <div class="bento-card-light bento-kpi animate-on-scroll scale-in" style="transition-delay: 100ms;">
                 <div class="kpi-title">Surperformance Market</div>
                 <div class="kpi-value-gold">+23,05 %</div>
                 <p style="color: var(--text-light); font-size: 0.8rem;">Écart d'ADR généré face au set concurrentiel
                     (Janvier).</p>
             </div>
 
-            <div class="bento-card-light bento-kpi">
+            <div class="bento-card-light bento-kpi animate-on-scroll scale-in" style="transition-delay: 200ms;">
                 <div class="kpi-title">CA Mix Promotionnel</div>
                 <div class="kpi-value-gold">12 478 €</div>
                 <p style="color: var(--text-light); font-size: 0.8rem;">Revenus sécurisés via leviers Early/Last Minute
@@ -343,7 +333,7 @@
                     class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
 
-            <blockquote
+            <blockquote class="quote-reveal animate-on-scroll"
                 style="font-size: 1.5rem; font-style: italic; max-width: 800px; margin: 0 auto; line-height: 1.6; font-family: 'Playfair Display', serif;">
                 <i class="fas fa-quote-left"
                     style="color: var(--primary-color); font-size: 2rem; vertical-align: top; margin-right: 15px; opacity: 0.5;"></i>
@@ -407,7 +397,7 @@
             <h3 class="section-title text-center">Mes projets et réalisations</h3>
 
             <!-- ★ PROJET VEDETTE : Dashboard RM (Full Width) -->
-            <div
+            <div class="card-tilt animate-on-scroll scale-in"
                 style="background: var(--white); border-radius: 12px; padding: 40px; margin-bottom: 50px; border-top: 4px solid var(--primary-color); position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
                 <div
                     style="position: absolute; top: -14px; right: 25px; background: var(--primary-color); color: var(--white); font-size: 0.75rem; padding: 4px 14px; border-radius: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">
@@ -430,7 +420,7 @@
                             L'écosystème fusionne l'analyse prédictive de <strong>Python</strong> avec une interface 
                             <strong>Next.js</strong> réactive, propulsée par un agent IA cognitif.
                         </p>
-                        <ul style="padding-left: 0; list-style: none;">
+                        <ul class="stagger-children" style="padding-left: 0; list-style: none;">
                             <li style="margin-bottom: 8px;"><i class="fas fa-caret-right"
                                     style="color: var(--primary-color); margin-right: 8px;"></i> <strong>Assistant IA Cognitif :</strong> Agent Claude 3.5 nativement intégré pour l'analyse en temps réel des KPIs et recommandations stratégiques directes.</li>
                             <li style="margin-bottom: 8px;"><i class="fas fa-caret-right"
@@ -444,16 +434,16 @@
                     <!-- Colonne Droite : Tags + CTA -->
                     <div
                         style="flex: 0 0 280px; display: flex; flex-direction: column; align-items: flex-start; gap: 15px;">
-                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                            <span
+                        <div class="tags-container" style="display: flex; flex-wrap: wrap; gap: 6px;">
+                            <span class="tag-pop"
                                 style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">Next.js 15</span>
-                            <span
+                            <span class="tag-pop"
                                 style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">TypeScript</span>
-                            <span
+                            <span class="tag-pop"
                                 style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">Anthropic API</span>
-                            <span
+                            <span class="tag-pop"
                                 style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">Prisma</span>
-                            <span
+                            <span class="tag-pop"
                                 style="background: var(--accent-color); color: var(--secondary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;">Tailwind</span>
                         </div>
                         <a href="https://rm-dashboard-pro.vercel.app/" target="_blank"
@@ -477,7 +467,7 @@
         <p
             style="text-align: center; color: var(--text-light); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 25px;">
             Mes autres projets</p>
-        <div class="skills-grid">
+        <div class="skills-grid stagger-children">
 
             <div class="project-category">
                 <div class="skill-icon"><i class="fas fa-hotel"></i></div>
@@ -495,35 +485,26 @@
 
             <div class="project-category">
                 <div class="skill-icon"><i class="fas fa-house-user"></i></div>
-                <h4>Projet Immobilier Court-Terme<br>
-                    <span style="font-size: 0.8rem; color: var(--primary-color); font-weight: normal;">(En cours de
-                        réalisation)</span>
+                <h4>Automatisation & IA Appliquée<br>
+                    <span style="font-size: 0.8rem; color: var(--primary-color); font-weight: normal;">Projets d'automatisation personnels</span>
                 </h4>
-                <p style="color: var(--text-light); margin-bottom: 10px; font-size: 0.95rem;">
-                    <strong>Prospection B2B & Outils IA</strong>
-                </p>
                 <ul style="padding-left:0;">
-                    <li><i class="fas fa-caret-right"></i> Entrepreneuriat : création d'une architecture locative et
-                        stratégique.</li>
-                    <li><i class="fas fa-caret-right"></i> Automatisation : utilisation de l'intelligence
-                        artificielle pour la prospection et l'organisation.</li>
-                    <li><i class="fas fa-caret-right"></i> Veille technologique pour automatiser les revenus
-                        (Personal Finance).</li>
+                    <li><i class="fas fa-caret-right"></i> Conception de workflows d'automatisation alimentés par IA pour la prospection et l'organisation.</li>
+                    <li><i class="fas fa-caret-right"></i> Veille technologique continue sur les outils no-code et les agents IA.</li>
+                    <li><i class="fas fa-caret-right"></i> Application des principes de Revenue Management à d'autres secteurs (immobilier, finance).</li>
                 </ul>
             </div>
 
             <div class="project-category">
                 <div class="skill-icon"><i class="fas fa-globe-americas"></i></div>
-                <h4>Passions & Loisirs</h4>
-                <p style="color: var(--text-light); margin-bottom: 10px; font-size: 0.95rem;">
-                    <strong>Développement Personnel</strong>
-                </p>
+                <h4>Curiosité Tech & Side Projects<br>
+                    <span style="font-size: 0.8rem; color: var(--primary-color); font-weight: normal;">Développement Personnel</span>
+                </h4>
                 <ul style="padding-left:0;">
-                    <li><i class="fas fa-heart"></i> Mettre à profit la Tech (IA) pour apprendre de nouvelles
-                        compétences techniques.</li>
-                    <li><i class="fas fa-heart"></i> Voyage & Découverte des cultures.</li>
-                    <li><i class="fas fa-heart"></i> Investissement boursier & Gestion de revenus financiers.</li>
-                    <li><i class="fas fa-heart"></i> Cuisiner & Pratique du sport intensif.</li>
+                    <li><i class="fas fa-heart"></i> Game Development (Roblox Studio & Lua scripting)</li>
+                    <li><i class="fas fa-heart"></i> Prototypage d'outils IA & automatisation</li>
+                    <li><i class="fas fa-heart"></i> Voyage & découverte des cultures hôtelières</li>
+                    <li><i class="fas fa-heart"></i> Sport intensif & discipline quotidienne</li>
                 </ul>
             </div>
 
@@ -531,11 +512,11 @@
     </section>
 
     <!-- Skills Section (Avec Vagues WebGL) -->
-    <section class="skills" id="skills" style="position: relative; overflow: hidden; background-color: #111;">
-        <div class="container" style="position: relative; z-index: 1;">
+    <section class="skills animate-on-scroll" id="skills" style="position: relative; overflow: hidden; background-color: #111;">
+        <div class="container animate-on-scroll" style="position: relative; z-index: 1;">
             <h3 class="section-title text-center" style="color: var(--white); border-color: var(--primary-color);">
                 Outils & Stack Technique</h3>
-            <div class="skills-grid" style="margin-top: 30px;">
+            <div class="skills-grid stagger-children" style="margin-top: 30px;">
                 <div class="skill-category">
                     <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
                     <h4>Écosystème RM</h4>
@@ -587,9 +568,9 @@
     </section>
 
     <!-- Contact & Footer -->
-    <footer id="contact">
+    <footer id="contact" class="animate-on-scroll">
         <div class="container text-center">
-            <h3 class="section-title" style="color:white;">Prêt à collaborer ?</h3>
+            <h3 class="section-title animate-on-scroll" style="color:white;">Prêt à collaborer ?</h3>
             <p style="color: #aaa; margin-bottom: 30px;">Rencontrons-nous pour échanger sur vos enjeux de Revenue
                 Management.</p>
             <div class="contact-methods">
@@ -607,7 +588,7 @@
                 </a>
             </div>
             <div class="copyright">
-                <p>&copy; 2026 Oğuz Atasoy. Tous droits réservés.</p>
+                <p>&copy; 2024–2026 Oğuz Atasoy. Tous droits réservés.</p>
             </div>
         </div>
     </footer>

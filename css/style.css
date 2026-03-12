@@ -784,19 +784,171 @@ footer {
     }
 }
 
-/* Animations */
-.fade-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
+/* ============================================
+   SCROLL ANIMATIONS
+   ============================================ */
+
+/* État initial : invisible et décalé vers le bas */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
 
-.delay-1 {
-    animation-delay: 0.2s;
+/* État final : visible et en place */
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.delay-2 {
-    animation-delay: 0.4s;
+/* Variante : slide depuis la gauche */
+.animate-on-scroll.from-left {
+  transform: translateX(-30px) translateY(0);
+}
+.animate-on-scroll.from-left.is-visible {
+  transform: translateX(0) translateY(0);
+}
+
+/* Variante : slide depuis la droite */
+.animate-on-scroll.from-right {
+  transform: translateX(30px) translateY(0);
+}
+.animate-on-scroll.from-right.is-visible {
+  transform: translateX(0) translateY(0);
+}
+
+/* Variante : scale-in (pour les cards) */
+.animate-on-scroll.scale-in {
+  transform: scale(0.95);
+}
+.animate-on-scroll.scale-in.is-visible {
+  transform: scale(1);
+}
+
+/* Stagger children : les enfants héritent de l'animation du parent */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.stagger-children.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* HERO — Apparition séquentielle au chargement */
+.hero-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroFadeIn 0.8s ease-out forwards;
+}
+
+.hero-animate:nth-child(1) { animation-delay: 0.1s; }
+.hero-animate:nth-child(2) { animation-delay: 0.3s; }
+.hero-animate:nth-child(3) { animation-delay: 0.5s; }
+.hero-animate:nth-child(4) { animation-delay: 0.7s; }
+.hero-animate:nth-child(5) { animation-delay: 0.9s; }
+
+@keyframes heroFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-photo {
+  opacity: 0;
+  transform: scale(1.05);
+  animation: heroPhotoIn 1s ease-out 0.2s forwards;
+}
+
+@keyframes heroPhotoIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Barres du graphique ADR */
+.bar-animate {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bar-animate.is-visible {
+  transform: scaleY(1);
+}
+
+.bar-animate:nth-child(1) { transition-delay: 0ms; }
+.bar-animate:nth-child(2) { transition-delay: 150ms; }
+.bar-animate:nth-child(3) { transition-delay: 300ms; }
+.bar-animate:nth-child(4) { transition-delay: 450ms; }
+.bar-animate:nth-child(5) { transition-delay: 600ms; }
+
+/* Tilt 3D sur les cards */
+.card-tilt {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  will-change: transform;
+}
+
+.card-tilt:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Tags tech pop-in */
+.tag-pop {
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tag-pop.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Avis Booking */
+.quote-reveal {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  border-left: 3px solid transparent;
+}
+
+.quote-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  border-left-color: var(--primary-color);
+  transition: opacity 1s ease-out, transform 1s ease-out, border-left-color 1.5s ease-out 0.5s;
+}
+
+/* Barre de progression scroll */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  width: 0%;
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+/* Respect de l'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll,
+  .stagger-children > *,
+  .hero-animate,
+  .hero-photo,
+  .bar-animate,
+  .tag-pop,
+  .quote-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 .delay-3 {

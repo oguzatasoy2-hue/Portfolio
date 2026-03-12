@@ -58,26 +58,144 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Simple Scroll Animation Detection
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-};
+// ============================================
+// SCROLL ANIMATIONS — IntersectionObserver
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
 
-const observer = new IntersectionObserver((entries, observer) => {
+  // Éléments animés au scroll
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -60px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-up');
-            observer.unobserve(entry.target);
-        }
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target); 
+      }
     });
-}, observerOptions);
+  }, observerOptions);
 
-// Observe section titles and timeline items
-document.querySelectorAll('.section-title, .timeline-item, .skill-category, .about-text').forEach(el => {
-    el.style.opacity = '0';
+  // Sélectionne tous les éléments avec la classe d'animation
+  document.querySelectorAll('.animate-on-scroll').forEach(el => {
     observer.observe(el);
+  });
+
+  // Staggered children (pour les listes, cards, etc.)
+  document.querySelectorAll('.stagger-children').forEach(parent => {
+    const children = parent.children;
+    Array.from(children).forEach((child, index) => {
+      child.style.transitionDelay = `${index * 120}ms`;
+    });
+    observer.observe(parent);
+  });
+
+  // ============================================
+  // ANIMATED COUNTERS
+  // ============================================
+  function animateCounter(element, target, duration = 2000, suffix = '') {
+    let start = 0;
+    const increment = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= target) {
+        element.textContent = (suffix === '%' ? '+' : '') + target + suffix;
+        clearInterval(timer);
+      } else {
+        element.textContent = (suffix === '%' ? '+' : '') + Math.floor(start) + suffix;
+      }
+    }, 16);
+  }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        animateCounter(el, target, 2000, suffix);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.counter-animate').forEach(el => {
+    counterObserver.observe(el);
+  });
+
+  // ============================================
+  // BAR CHART ANIMATION
+  // ============================================
+  const chartObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.bar-animate').forEach(bar => {
+          bar.classList.add('is-visible');
+        });
+        chartObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.chart-container').forEach(el => {
+    chartObserver.observe(el);
+  });
+
+  // ============================================
+  // CARD TILT 3D
+  // ============================================
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.card-tilt').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -3; 
+        const rotateY = ((x - centerX) / centerX) * 3;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+      });
+    });
+  }
+
+  // ============================================
+  // TAGS POP-IN STAGGERED
+  // ============================================
+  const tagObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const tags = entry.target.querySelectorAll('.tag-pop');
+        tags.forEach((tag, i) => {
+          setTimeout(() => tag.classList.add('is-visible'), i * 60);
+        });
+        tagObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.tags-container').forEach(el => {
+    tagObserver.observe(el);
+  });
+});
+
+// ============================================
+// SCROLL PROGRESS BAR
+// ============================================
+window.addEventListener('scroll', () => {
+  const scrollBar = document.getElementById('scrollProgress');
+  if (scrollBar) {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    scrollBar.style.width = progress + '%';
+  }
 });
 
 
