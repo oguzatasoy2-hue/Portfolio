@@ -1082,11 +1082,48 @@ footer {
   transform: translateY(0);
 }
 
+/* ============================================
+   CURSOR GLOW — halo bleu discret (desktop)
+   ============================================ */
+#cursorGlow {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,175,55,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  left: -999px;
+  top: -999px;
+  transition: left 0.4s ease-out, top 0.4s ease-out;
+  display: none;
+}
+
+/* ============================================
+   HERO FADE — apparition séquentielle
+   ============================================ */
+.hero-fade {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: fadeSlideUp 0.9s ease-out forwards;
+}
+.hero-fade.d1 { animation-delay: 0.1s; }
+.hero-fade.d2 { animation-delay: 0.3s; }
+.hero-fade.d3 { animation-delay: 0.5s; }
+.hero-fade.d4 { animation-delay: 0.7s; }
+.hero-fade.d5 { animation-delay: 0.9s; }
+
+@keyframes fadeSlideUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Respect de l'accessibilité */
 @media (prefers-reduced-motion: reduce) {
   .animate-on-scroll,
   .stagger-children > *,
   .hero-animate,
+  .hero-fade,
   .hero-photo,
   .bar-animate,
   .tag-pop,
@@ -1096,6 +1133,7 @@ footer {
     transition: none !important;
     animation: none !important;
   }
+  #cursorGlow { display: none !important; }
 }
 
 .delay-3 {

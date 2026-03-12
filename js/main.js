@@ -237,6 +237,75 @@ if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
 }
 
 // ============================================
+// CURSOR GLOW — halo doré discret (desktop)
+// ============================================
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const glow = document.getElementById('cursorGlow');
+  if (glow) {
+    glow.style.display = 'block';
+    document.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+    }, { passive: true });
+  }
+}
+
+// ============================================
+// COMPTEURS FLOAT (KPI yield : +23,05 % / 12 478 €)
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+  const floatObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target  = parseFloat(el.dataset.target);
+      const prefix  = el.dataset.prefix  || '';
+      const suffix  = el.dataset.suffix  || '';
+      const fmt     = el.dataset.format  || '';
+      const isFloat = target % 1 !== 0;
+      const duration = 2000;
+      const start = performance.now();
+
+      function formatNum(val) {
+        if (fmt === 'space') {
+          return Math.floor(val).toLocaleString('fr-FR').replace(/\u202f/g, '\u202f');
+        }
+        if (isFloat) return val.toFixed(2).replace('.', ',');
+        return Math.floor(val);
+      }
+
+      function tick(now) {
+        const elapsed  = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased    = 1 - Math.pow(1 - progress, 3);
+        el.textContent = prefix + formatNum(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = prefix + formatNum(target) + suffix;
+      }
+      requestAnimationFrame(tick);
+      floatObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.counter-float').forEach(el => floatObserver.observe(el));
+
+  // ============================================
+  // PARALLAX SUBTIL SUR LA PHOTO HERO (desktop)
+  // ============================================
+  if (window.matchMedia('(hover: hover)').matches) {
+    const photoWrap = document.querySelector('.hero-photo');
+    if (photoWrap) {
+      window.addEventListener('scroll', () => {
+        const scroll = window.scrollY;
+        if (scroll < 700) {
+          photoWrap.style.transform = `scale(1) translateY(${scroll * 0.07}px)`;
+        }
+      }, { passive: true });
+    }
+  }
+});
+
+// ============================================
 // CARD LIGHT EFFECT (reflet qui suit le curseur)
 // ============================================
 document.querySelectorAll('.card-light').forEach(card => {
