@@ -1,447 +1,226 @@
-// ============================================
-// PORTFOLIO ANIMATIONS — Oguz Atasoy (v11)
-// ============================================
+/* Oğuz Atasoy, portfolio. Aucune dépendance.
+   Le site reste lisible sans ce fichier : il ne fait qu'orchestrer les animations. */
+(function () {
+  'use strict';
 
-// Sticky Navigation
-window.addEventListener('scroll', function () {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
+  var root = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+
+  var stack = $('#poStack');
+  var tilt = $('#poTilt');
+  var pin = $('#pin');
+  var bar = $('#topbar');
+  var hero = $('#accueil');
+
+  /* ---- Longueur des tracés dessinés (cercle autour de « 24 mois », coches) ---- */
+  $$('[data-draw]').forEach(function (p) {
+    try { p.style.setProperty('--len', Math.ceil(p.getTotalLength()) + 2); } catch (e) { /* tracé affiché en entier */ }
+  });
+
+  /* ---- Compteurs : valeur finale lue par les lecteurs d'écran, animation purement visuelle ---- */
+  var counters = $$('[data-count]').map(function (el) {
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    var sr = document.createElement('span');
+    sr.className = 'sr';
+    sr.textContent = fmt(target) + suffix;
+    el.parentNode.insertBefore(sr, el);
+    el.setAttribute('aria-hidden', 'true');
+    return { el: el, target: target, suffix: suffix };
+  });
+
+  function runCounters(delay) {
+    if (reduce) { return; }
+    counters.forEach(function (c) { c.el.textContent = fmt(0) + c.suffix; });
+    window.setTimeout(function () {
+      var t0 = null;
+      var dur = 1100;
+      function step(t) {
+        if (t0 === null) { t0 = t; }
+        var k = clamp((t - t0) / dur, 0, 1);
+        var e = 1 - Math.pow(1 - k, 3);
+        counters.forEach(function (c) { c.el.textContent = fmt(Math.round(c.target * e)) + c.suffix; });
+        if (k < 1) { window.requestAnimationFrame(step); }
+      }
+      window.requestAnimationFrame(step);
+    }, delay);
+  }
+
+  /* ---- Bon de commande : lecture de la séquence ---- */
+  function playStack() {
+    if (!stack || stack.classList.contains('is-in') || stack.classList.contains('is-done')) { return; }
+    stack.classList.add('is-in');
+    /* l'inclinaison à la souris est active dès l'impact de l'épingle */
+    window.setTimeout(function () { stack.classList.add('is-live'); }, 2100);
+    window.setTimeout(function () {
+      stack.classList.remove('is-in');
+      stack.classList.add('is-done');
+    }, 3500);
+  }
+
+  /* ---- Épingle : un clic la retire et la replante ---- */
+  var replayTimer = 0;
+  function replay() {
+    if (!stack || !stack.classList.contains('is-done')) { return; }
+    stack.classList.remove('is-replay');
+    void stack.offsetWidth;
+    stack.classList.add('is-replay');
+    window.clearTimeout(replayTimer);
+    replayTimer = window.setTimeout(function () { stack.classList.remove('is-replay'); }, 3000);
+  }
+  if (pin) {
+    if (reduce) {
+      pin.removeAttribute('role');
+      pin.removeAttribute('title');
+      pin.setAttribute('tabindex', '-1');
+      pin.setAttribute('aria-hidden', 'true');
     } else {
-        navbar.classList.remove('scrolled');
+      pin.addEventListener('click', replay);
+      pin.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); replay(); }
+      });
     }
-});
+  }
 
-// Mobile Menu Toggle
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-const links = document.querySelectorAll('.nav-links li');
+  /* ---- Inclinaison douce du bon de commande selon la souris (écrans à pointeur précis) ---- */
+  if (tilt && stack && fine && !reduce) {
+    var cur = { x: 0, y: 0 };
+    var goal = { x: 0, y: 0 };
+    var raf = 0;
+    var heroVisible = true;
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    links.forEach((link, index) => {
-        if (link.style.animation) {
-            link.style.animation = '';
-        } else {
-            link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-        }
-    });
-    hamburger.classList.toggle('toggle');
-});
-
-links.forEach(link => {
-    link.addEventListener('click', () => {
-        if (navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('toggle');
-        }
-    });
-});
-
-// Smooth Scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetElement = document.querySelector(this.getAttribute('href'));
-        if (targetElement) {
-            const headerOffset = 70;
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-        }
-    });
-});
-
-// ============================================
-// MASTER OBSERVER — Scroll Animations
-// ============================================
-document.addEventListener('DOMContentLoaded', () => {
-
-  const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -60px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.animate-on-scroll').forEach(el => {
-    observer.observe(el);
-  });
-
-  // Staggered children
-  document.querySelectorAll('.stagger-children').forEach(parent => {
-    const children = parent.children;
-    Array.from(children).forEach((child, index) => {
-      child.style.transitionDelay = `${index * 120}ms`;
-    });
-    observer.observe(parent);
-  });
-
-  // ============================================
-  // ANIMATED COUNTERS (integers)
-  // ============================================
-  function animateCounter(element, target, duration = 2000, suffix = '') {
-    const startTime = performance.now();
-    function update(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.floor(eased * target);
-      element.textContent = (suffix === '%' ? '+' : '') + current + suffix;
-      if (progress < 1) {
-        requestAnimationFrame(update);
+    var loop = function () {
+      cur.x += (goal.x - cur.x) * 0.085;
+      cur.y += (goal.y - cur.y) * 0.085;
+      tilt.style.setProperty('--rx', cur.x.toFixed(3));
+      tilt.style.setProperty('--ry', cur.y.toFixed(3));
+      if (Math.abs(goal.x - cur.x) > 0.01 || Math.abs(goal.y - cur.y) > 0.01) {
+        raf = window.requestAnimationFrame(loop);
       } else {
-        element.textContent = (suffix === '%' ? '+' : '') + target + suffix;
+        raf = 0;
       }
-    }
-    requestAnimationFrame(update);
-  }
+    };
+    var kick = function () { if (!raf) { raf = window.requestAnimationFrame(loop); } };
 
-  const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseInt(el.dataset.target);
-        const suffix = el.dataset.suffix || '';
-        animateCounter(el, target, 2000, suffix);
-        counterObserver.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.counter-animate').forEach(el => {
-    counterObserver.observe(el);
-  });
-
-  // ============================================
-  // FLOAT COUNTERS (KPI yield : +23,05 % / 12 478 €)
-  // ============================================
-  const floatObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const target  = parseFloat(el.dataset.target);
-      const prefix  = el.dataset.prefix  || '';
-      const suffix  = el.dataset.suffix  || '';
-      const fmt     = el.dataset.format  || '';
-      const isFloat = target % 1 !== 0;
-      const duration = 2000;
-      const start = performance.now();
-
-      function formatNum(val) {
-        if (fmt === 'space') {
-          return Math.floor(val).toLocaleString('fr-FR');
-        }
-        if (isFloat) return val.toFixed(2).replace('.', ',');
-        return Math.floor(val);
-      }
-
-      function tick(now) {
-        const elapsed  = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased    = 1 - Math.pow(1 - progress, 3);
-        el.textContent = prefix + formatNum(eased * target) + suffix;
-        if (progress < 1) requestAnimationFrame(tick);
-        else el.textContent = prefix + formatNum(target) + suffix;
-      }
-      requestAnimationFrame(tick);
-      floatObserver.unobserve(el);
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.counter-float').forEach(el => floatObserver.observe(el));
-
-  // ============================================
-  // SVG CHART ANIMATION (cercles + ligne tracée)
-  // ============================================
-  const chartObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const circles = entry.target.querySelectorAll('.bar-animate');
-        circles.forEach((circle, i) => {
-          setTimeout(() => circle.classList.add('is-visible'), i * 200);
-        });
-        const line = entry.target.querySelector('.chart-line-draw');
-        if (line) {
-          line.classList.add('is-visible');
-        }
-        chartObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  document.querySelectorAll('.chart-container').forEach(el => {
-    chartObserver.observe(el);
-  });
-
-  // ============================================
-  // CARD TILT 3D (desktop only)
-  // ============================================
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.card-tilt').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -3;
-        const rotateY = ((x - centerX) / centerX) * 3;
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-      });
-    });
-  }
-
-  // ============================================
-  // TAGS POP-IN STAGGERED
-  // ============================================
-  const tagObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const tags = entry.target.querySelectorAll('.tag-pop');
-        tags.forEach((tag, i) => {
-          setTimeout(() => tag.classList.add('is-visible'), i * 80);
-        });
-        tagObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  document.querySelectorAll('.tags-container').forEach(el => {
-    tagObserver.observe(el);
-  });
-
-  // ============================================
-  // PARALLAX SUBTIL PHOTO HERO (desktop, throttlé RAF)
-  // ============================================
-  if (window.matchMedia('(hover: hover)').matches) {
-    const photoWrap = document.querySelector('.hero-photo');
-    if (photoWrap) {
-      setTimeout(() => {
-        photoWrap.style.animation = 'none';
-        photoWrap.style.opacity = '1';
-        photoWrap.style.transform = 'translateZ(0)';
-        let rafPending = false;
-        window.addEventListener('scroll', () => {
-          if (!rafPending) {
-            rafPending = true;
-            requestAnimationFrame(() => {
-              const scroll = window.scrollY;
-              if (scroll < 700) {
-                photoWrap.style.transform = `translateY(${scroll * 0.07}px)`;
-              }
-              rafPending = false;
-            });
-          }
-        }, { passive: true });
-      }, 1400);
-    }
-  }
-
-  // ============================================
-  // MAGNETIC BUTTONS
-  // ============================================
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.btn-magnetic').forEach(btn => {
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-      });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translate(0, 0)';
-      });
-    });
-  }
-
-  // ============================================
-  // TYPEWRITER — saisie lettre par lettre sur le role
-  // ============================================
-  const twEl = document.querySelector('.text-scramble');
-  if (twEl) {
-    const fullText = twEl.textContent.trim();
-    twEl.textContent = '';
-    let i = 0;
-    function typeNext() {
-      if (i < fullText.length) {
-        twEl.textContent += fullText[i];
-        i++;
-        setTimeout(typeNext, 35);
-      }
-    }
-    setTimeout(typeNext, 700);
-  }
-
-}); // fin DOMContentLoaded
-
-// ============================================
-// CURSEUR CUSTOM DORÉ
-// ============================================
-const cursorDot  = document.getElementById('cursorDot');
-const cursorRing = document.getElementById('cursorRing');
-
-if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
-  let mouseX = 0, mouseY = 0;
-  let ringX  = 0, ringY  = 0;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursorDot.style.left = mouseX + 'px';
-    cursorDot.style.top  = mouseY + 'px';
-    cursorDot.classList.add('is-active');
-    cursorRing.classList.add('is-active');
-  });
-
-  (function animateRing() {
-    ringX += (mouseX - ringX) * 0.12;
-    ringY += (mouseY - ringY) * 0.12;
-    cursorRing.style.left = ringX + 'px';
-    cursorRing.style.top  = ringY + 'px';
-    requestAnimationFrame(animateRing);
-  })();
-
-  document.querySelectorAll('a, button, .btn, .contact-box, .card-tilt').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursorDot.classList.add('hovered');
-      cursorRing.classList.add('hovered');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursorDot.classList.remove('hovered');
-      cursorRing.classList.remove('hovered');
-    });
-  });
-
-  document.addEventListener('mouseleave', () => {
-    cursorDot.classList.remove('is-active');
-    cursorRing.classList.remove('is-active');
-  });
-  document.addEventListener('mouseenter', () => {
-    cursorDot.classList.add('is-active');
-    cursorRing.classList.add('is-active');
-  });
-}
-
-// ============================================
-// CURSOR GLOW (desktop)
-// ============================================
-if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  const glow = document.getElementById('cursorGlow');
-  if (glow) {
-    glow.style.display = 'block';
-    document.addEventListener('mousemove', (e) => {
-      glow.style.left = e.clientX + 'px';
-      glow.style.top  = e.clientY + 'px';
+    window.addEventListener('pointermove', function (e) {
+      if (!heroVisible || !(stack.classList.contains('is-live') || stack.classList.contains('is-done')) || stack.classList.contains('is-replay')) { return; }
+      var r = stack.getBoundingClientRect();
+      var nx = clamp((e.clientX - (r.left + r.width / 2)) / (window.innerWidth / 2), -1, 1);
+      var ny = clamp((e.clientY - (r.top + r.height / 2)) / (window.innerHeight / 2), -1, 1);
+      goal.y = nx * 5.5;
+      goal.x = -ny * 4.5;
+      kick();
     }, { passive: true });
+
+    document.documentElement.addEventListener('mouseleave', function () {
+      goal.x = 0; goal.y = 0; kick();
+    });
+
+    if ('IntersectionObserver' in window && hero) {
+      new IntersectionObserver(function (entries) {
+        heroVisible = entries[0].isIntersecting;
+        if (!heroVisible) { goal.x = 0; goal.y = 0; kick(); }
+      }).observe(hero);
+    }
   }
-}
 
-// ============================================
-// CARD LIGHT EFFECT (reflet curseur)
-// ============================================
-document.querySelectorAll('.card-light').forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    card.style.setProperty('--mouse-x', x + '%');
-    card.style.setProperty('--mouse-y', y + '%');
-  });
-});
-
-// ============================================
-// NAV ACTIVE SECTION
-// ============================================
-const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
-const pageSections = document.querySelectorAll('section[id], header[id]');
-
-const activeSectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      navAnchors.forEach(a => {
-        a.classList.remove('nav-active');
-        if (a.getAttribute('href') === `#${id}`) {
-          a.classList.add('nav-active');
+  /* ---- Apparitions au défilement ---- */
+  var revealItems = $$('[data-reveal]');
+  if ('IntersectionObserver' in window && !reduce) {
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          rio.unobserve(e.target);
         }
       });
-    }
-  });
-}, { threshold: 0.4 });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    revealItems.forEach(function (el) { rio.observe(el); });
+  } else {
+    revealItems.forEach(function (el) { el.classList.add('in'); });
+  }
 
-pageSections.forEach(s => activeSectionObserver.observe(s));
-
-// ============================================
-// SCROLL PROGRESS BAR (throttlé RAF)
-// ============================================
-const scrollBar = document.getElementById('scrollProgress');
-if (scrollBar) {
-  let rafBar = false;
-  window.addEventListener('scroll', () => {
-    if (!rafBar) {
-      rafBar = true;
-      requestAnimationFrame(() => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        scrollBar.style.width = ((scrollTop / docHeight) * 100) + '%';
-        rafBar = false;
-      });
-    }
-  }, { passive: true });
-}
-
-// ============================================
-// tsParticles (Particules Dorées)
-// ============================================
-document.addEventListener("DOMContentLoaded", function () {
-  if (typeof tsParticles !== 'undefined') {
-    tsParticles.load("tsparticles", {
-      background: { color: { value: "transparent" } },
-      particles: {
-        color: { value: "#D4AF37" },
-        links: {
-          color: "#D4AF37",
-          distance: 150,
-          enable: true,
-          opacity: 0.2,
-          width: 1,
-        },
-        move: {
-          direction: "none",
-          enable: true,
-          outModes: { default: "bounce" },
-          random: false,
-          speed: 1,
-          straight: false,
-        },
-        number: {
-          density: { enable: true, area: 800 },
-          value: 60,
-        },
-        opacity: { value: 0.3 },
-        shape: { type: "circle" },
-        size: { value: { min: 1, max: 3 } },
-      },
-      interactivity: {
-        events: {
-          onHover: { enable: true, mode: "grab" }
-        },
-        modes: {
-          grab: { distance: 140, links: { opacity: 0.4 } }
-        }
-      },
-      detectRetina: true,
+  /* ---- Barre compacte, progression et rubrique active ---- */
+  var ticking = false;
+  function onScroll() {
+    if (ticking || !bar) { return; }
+    ticking = true;
+    window.requestAnimationFrame(function () {
+      ticking = false;
+      var y = window.pageYOffset || root.scrollTop;
+      var h = hero ? hero.offsetHeight : 600;
+      bar.classList.toggle('on', y > h * 0.62);
+      var max = root.scrollHeight - window.innerHeight;
+      bar.style.setProperty('--p', max > 0 ? clamp(y / max, 0, 1).toFixed(4) : '0');
     });
   }
-});
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  if ('IntersectionObserver' in window) {
+    var links = $$('.nav a[href^="#"]');
+    var barNav = $('.topbar .nav');
+    var ids = ['accueil', 'lignes', 'dossiers', 'parcours', 'lexique', 'contact'];
+    /* sur mobile la barre défile : on centre la rubrique active */
+    var centerLink = function (a) {
+      if (!barNav || barNav.scrollWidth <= barNav.clientWidth + 2) { return; }
+      var left = barNav.scrollLeft + (a.getBoundingClientRect().left - barNav.getBoundingClientRect().left) - (barNav.clientWidth - a.offsetWidth) / 2;
+      barNav.scrollTo({ left: left, behavior: 'smooth' });
+    };
+    var nio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) { return; }
+        var id = e.target.id;
+        links.forEach(function (a) {
+          if (a.getAttribute('href') === '#' + id) {
+            a.setAttribute('aria-current', 'true');
+            if (barNav && barNav.contains(a)) { centerLink(a); }
+          } else { a.removeAttribute('aria-current'); }
+        });
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) { nio.observe(el); }
+    });
+  }
+
+  /* ---- Départ de la séquence : après chargement des polices pour éviter tout saut de mise en page ---- */
+  var started = false;
+  function start() {
+    if (started) { return; }
+    started = true;
+    runCounters(1400);
+    root.classList.add('is-ready');
+    if (!stack) { return; }
+    if (reduce) { stack.classList.add('is-done'); return; }
+    if ('IntersectionObserver' in window) {
+      var sio = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { sio.disconnect(); playStack(); }
+      }, { threshold: 0.3 });
+      sio.observe(stack);
+    } else {
+      playStack();
+    }
+  }
+
+  var fontsReady = Promise.resolve();
+  if (document.fonts && document.fonts.load) {
+    fontsReady = Promise.all([
+      document.fonts.load('800 1em Archivo', 'Oğuz Atasoy'),
+      document.fonts.load('400 1em Archivo', 'Alternance'),
+      document.fonts.load('500 1em "IBM Plex Mono"', 'N° 01')
+    ]).catch(function () { /* on démarre quand même */ });
+  }
+  var grace = new Promise(function (resolve) { window.setTimeout(resolve, 1500); });
+  Promise.race([fontsReady, grace]).then(function () {
+    window.requestAnimationFrame(function () { window.requestAnimationFrame(start); });
+  });
+})();
