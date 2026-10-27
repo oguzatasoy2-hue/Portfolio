@@ -37,7 +37,12 @@
 
   function runCounters(delay) {
     if (reduce) { return; }
-    counters.forEach(function (c) { c.el.textContent = fmt(0) + c.suffix; });
+    /* la largeur finale est réservée : les chiffres voisins ne bougent pas pendant le comptage */
+    counters.forEach(function (c) {
+      c.el.style.display = 'inline-block';
+      c.el.style.minWidth = c.el.getBoundingClientRect().width + 'px';
+      c.el.textContent = fmt(0) + c.suffix;
+    });
     window.setTimeout(function () {
       var t0 = null;
       var dur = 1100;
@@ -46,7 +51,11 @@
         var k = clamp((t - t0) / dur, 0, 1);
         var e = 1 - Math.pow(1 - k, 3);
         counters.forEach(function (c) { c.el.textContent = fmt(Math.round(c.target * e)) + c.suffix; });
-        if (k < 1) { window.requestAnimationFrame(step); }
+        if (k < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          counters.forEach(function (c) { c.el.style.display = ''; c.el.style.minWidth = ''; });
+        }
       }
       window.requestAnimationFrame(step);
     }, delay);
